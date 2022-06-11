@@ -6,10 +6,7 @@
 package com.escolar.control.services;
 
 import com.escolar.control.model.CommonComponent;
-import com.escolar.control.model.estudianteModel;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,30 +17,28 @@ import org.springframework.stereotype.Service;
  * @author Draxl
  */
 @Service
-public class estudianteService extends CommonComponent{
+public class examenService extends CommonComponent{
+    private static final Logger LOGGER = Logger.getLogger(examenService.class);
     
-    private static final Logger LOGGER = Logger.getLogger(estudianteService.class);
-    
-    public Map registrarEstudiante(estudianteModel estudiante){
+    public Map registrarExamen(String examen){
         Map estatus = new HashMap();
         
         return estatus;
     }
     
-    public Map obtenerEstudiantes(){
+    public Map obtenerExamenes(){
         Map estatus = new HashMap();
         
         return estatus;
     }
     
-    public Map obtenerEstudiante(int idEstudiante){
+    public Map obtenerExamen(int idExamen){
         Map estatus = new HashMap();
         try{
-            MapSqlParameterSource parameterSource = new MapSqlParameterSource("idConvenio", idEstudiante);
+            MapSqlParameterSource parameterSource = new MapSqlParameterSource("idConvenio", idExamen);
             String statement = "SELECT * "
-                    + "FROM convenio.vw_Convenio AS c "
-                    + "INNER JOIN convenio.vw_ConvenioEntrega AS ce ON ce.idConvenio = c.idConvenio "
-                    + "WHERE c.idEstudiante = :idEstudiante";
+                    + "FROM examen AS c "
+                    + "WHERE c.idExamen = :idExamen";
             Map<String, Object> registros = connectionByName.queryForMap(statement, parameterSource);
             return registros;
         }catch(Exception ex){
