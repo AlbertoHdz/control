@@ -74,6 +74,10 @@ public class examenDao extends CommonComponent{
             SimpleJdbcCall storeProcedure = new SimpleJdbcCall(connection)
                     .withProcedureName("usp_RegistrarRespuesta")
                     .declareParameters(
+                            new SqlParameter("idPregunta", Types.INTEGER),
+                            new SqlParameter("idPregunta", Types.INTEGER),
+                            new SqlParameter("idPregunta", Types.INTEGER),
+                            new SqlParameter("idPregunta", Types.INTEGER),
                             new SqlParameter("idPregunta", Types.INTEGER)
                     );
 

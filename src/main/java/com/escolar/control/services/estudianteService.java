@@ -5,6 +5,7 @@
  */
 package com.escolar.control.services;
 
+import com.escolar.control.RequestBase;
 import com.escolar.control.model.CommonComponent;
 import com.escolar.control.model.estudianteModel;
 import java.util.ArrayList;
@@ -25,31 +26,39 @@ public class estudianteService extends CommonComponent{
     private static final Logger LOGGER = Logger.getLogger(estudianteService.class);
     
     public Map registrarEstudiante(estudianteModel estudiante){
-        Map estatus = new HashMap();
+        String msg = "Estudiante registrado";
         
-        return estatus;
+        return RequestBase.reportaSuccess(msg);
     }
     
     public Map obtenerEstudiantes(){
-        Map estatus = new HashMap();
-        
-        return estatus;
+        String msg = "Estudiantes Obtenidos";
+        List lista = new ArrayList<>();
+        estudianteModel est = new estudianteModel();
+        est.setNombre("Jorge Perez");
+        est.setEdad(21);
+        est.setCiudad(2);
+        lista.add(est);
+        est = new estudianteModel();
+        est.setNombre("Pedro Dominguez");
+        est.setEdad(21);
+        est.setCiudad(1);
+        lista.add(est);
+        return RequestBase.reportaSuccess(lista,msg);
     }
     
     public Map obtenerEstudiante(int idEstudiante){
-        Map estatus = new HashMap();
         try{
-            MapSqlParameterSource parameterSource = new MapSqlParameterSource("idConvenio", idEstudiante);
+            MapSqlParameterSource parameterSource = new MapSqlParameterSource("idEstudiante", idEstudiante);
             String statement = "SELECT * "
-                    + "FROM convenio.vw_Convenio AS c "
-                    + "INNER JOIN convenio.vw_ConvenioEntrega AS ce ON ce.idConvenio = c.idConvenio "
-                    + "WHERE c.idEstudiante = :idEstudiante";
+                    + "FROM usuario AS c "
+                    + "WHERE c.id = :idEstudiante";
             Map<String, Object> registros = connectionByName.queryForMap(statement, parameterSource);
-            return registros;
+            String msg = "Estudiante Obtenido";
+            return RequestBase.reportaSuccess(registros,msg);
         }catch(Exception ex){
-            estatus.put("codigo", 500);
-            estatus.put("mensaje", ex.getLocalizedMessage());
+            return RequestBase.reportaError(ex.getMessage());
         }
-        return estatus;
+        
     }
 }

@@ -5,8 +5,12 @@
  */
 package com.escolar.control.ws;
 
+import com.escolar.control.model.estudianteModel;
+import com.escolar.control.services.estudianteService;
 import java.util.HashMap;
+import java.util.Map;
 import org.json.simple.JSONValue;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,28 +25,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/estudiante")
 public class estudianteWS {
     
-    @PostMapping(value = "/", consumes = "application/json; charset=utf-8")
-    public String saveEstudiante(){
-        HashMap salida = new HashMap();
-        salida.put("codigo", 200);
-        salida.put("mensaje", "Estudiante creado");
+    @Autowired
+    estudianteService estudianteService;
+    
+    @PostMapping(value = "/", consumes = "application/json; charset=utf-8", produces = "application/json; charset=utf-8")
+    public String saveEstudiante(estudianteModel student){
+        Map salida = estudianteService.registrarEstudiante(student);
         return JSONValue.toJSONString(salida);
     }
     
-    @GetMapping(value = "/", consumes = "application/json; charset=utf-8")
+    @GetMapping(value = "/", consumes = "application/json; charset=utf-8", produces = "application/json; charset=utf-8")
     public String getEstudiantes(){
-        HashMap salida = new HashMap();
-        salida.put("codigo", 200);
-        salida.put("estudiantes", "lista de estudiantes");
+        Map salida = estudianteService.obtenerEstudiantes();
         return JSONValue.toJSONString(salida);
     }
     
-    @GetMapping(value = "/{idEstudiante}", consumes = "application/json; charset=utf-8")
+    @GetMapping(value = "/{idEstudiante}", consumes = "application/json; charset=utf-8", produces = "application/json; charset=utf-8")
     public String getEstudiante(@PathVariable(value = "idEstudiante") int idEstudiante){
-        HashMap salida = new HashMap();
-        salida.put("codigo", 200);
-        salida.put("estudiante", "estudiantes: "+idEstudiante);
-        
+        Map salida = estudianteService.obtenerEstudiante(idEstudiante);
         return JSONValue.toJSONString(salida);
     }
 }

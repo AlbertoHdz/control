@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/examen")
 public class examenWS {
     
-    @PostMapping(value = "/", consumes = "application/json; charset=utf-8")
+    @PostMapping(value = "/", consumes = "application/json; charset=utf-8", produces = "application/json; charset=utf-8")
     public String crear(){
         HashMap salida = new HashMap();
         String msg = "Agregado con exito";
@@ -30,7 +30,7 @@ public class examenWS {
         return JSONValue.toJSONString(salida);
     }
     
-    @GetMapping(value = "/", consumes = "application/json; charset=utf-8")
+    @GetMapping(value = "/", consumes = "application/json; charset=utf-8", produces = "application/json; charset=utf-8")
     public String extraertodos(){
         HashMap salida = new HashMap();
         salida.put("codigo", 200);
@@ -38,7 +38,7 @@ public class examenWS {
         return JSONValue.toJSONString(salida);
     }
     
-    @GetMapping(value = "/{idExamen}", consumes = "application/json; charset=utf-8")
+    @GetMapping(value = "/{idExamen}", consumes = "application/json; charset=utf-8", produces = "application/json; charset=utf-8")
     public String extraerExamen(@PathVariable(value = "idExamen") int idExamen){
         HashMap salida = new HashMap();
         salida.put("codigo", 200);

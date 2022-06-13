@@ -5,6 +5,7 @@
  */
 package com.escolar.control.services;
 
+import com.escolar.control.RequestBase;
 import com.escolar.control.model.CommonComponent;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,30 +22,27 @@ public class examenService extends CommonComponent{
     private static final Logger LOGGER = Logger.getLogger(examenService.class);
     
     public Map registrarExamen(String examen){
-        Map estatus = new HashMap();
-        
-        return estatus;
+        String msg = "Examen registrado";
+        return RequestBase.reportaSuccess(msg);
     }
     
     public Map obtenerExamenes(){
-        Map estatus = new HashMap();
-        
-        return estatus;
+        String msg = "GET Examenes registrados";
+        return RequestBase.reportaSuccess(msg);
     }
     
     public Map obtenerExamen(int idExamen){
-        Map estatus = new HashMap();
         try{
             MapSqlParameterSource parameterSource = new MapSqlParameterSource("idConvenio", idExamen);
             String statement = "SELECT * "
                     + "FROM examen AS c "
                     + "WHERE c.idExamen = :idExamen";
             Map<String, Object> registros = connectionByName.queryForMap(statement, parameterSource);
-            return registros;
+            String msg = "Examene Obtenido";
+            return RequestBase.reportaSuccess(registros,msg);
         }catch(Exception ex){
-            estatus.put("codigo", 500);
-            estatus.put("mensaje", ex.getLocalizedMessage());
+            return RequestBase.reportaError(ex.getLocalizedMessage());
         }
-        return estatus;
+        
     }
 }
